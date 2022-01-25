@@ -9,13 +9,14 @@ from PIL import Image
 from psutil import cpu_count
 from waymo_open_dataset import dataset_pb2 as open_dataset
 
-from utils import get_module_logger, parse_frame, int64_feature, int64_list_feature, \
-    bytes_list_feature, bytes_feature, float_list_feature
+from utils import get_module_logger, parse_frame, int64_feature, \
+    int64_list_feature, bytes_list_feature, bytes_feature, float_list_feature
 
 
 def create_tf_example(filename, encoded_jpeg, annotations, resize=True):
-    """
-    This function create a tf.train.Example from the Waymo frame.
+    """Create a tf.Train.Example.
+
+    This function creates a tf.train.Example from the Waymo frame.
 
     args:
         - filename [str]: name of the image
@@ -23,7 +24,8 @@ def create_tf_example(filename, encoded_jpeg, annotations, resize=True):
         - annotations [protobuf object]: bboxes and classes
 
     returns:
-        - tf_example [tf.Train.Example]: tf example in the objection detection api format.
+        - tf_example [tf.Train.Example]: tf example in the objection
+          detection api format.
     """
     if not resize:
         encoded_jpg_io = io.BytesIO(encoded_jpeg)
@@ -33,7 +35,8 @@ def create_tf_example(filename, encoded_jpeg, annotations, resize=True):
     else:
         image_tensor = tf.io.decode_jpeg(encoded_jpeg)
         height_factor, width_factor, _ = image_tensor.shape
-        image_res = tf.cast(tf.image.resize(image_tensor, (640, 640)), tf.uint8)
+        image_res = tf.cast(tf.image.resize(image_tensor,
+                            (640, 640)), tf.uint8)
         encoded_jpeg = tf.io.encode_jpeg(image_res).numpy()
         width, height = 640, 640
 
@@ -48,8 +51,10 @@ def create_tf_example(filename, encoded_jpeg, annotations, resize=True):
     filename = filename.encode('utf8')
 
     for ann in annotations:
-        xmin, ymin = ann.box.center_x - 0.5 * ann.box.length, ann.box.center_y - 0.5 * ann.box.width
-        xmax, ymax = ann.box.center_x + 0.5 * ann.box.length, ann.box.center_y + 0.5 * ann.box.width
+        xmin = ann.box.center_x - 0.5 * ann.box.length
+        ymin = ann.box.center_y - 0.5 * ann.box.width
+        xmax = ann.box.center_x + 0.5 * ann.box.length
+        ymax = ann.box.center_y + 0.5 * ann.box.width
         xmins.append(xmin / width_factor)
         xmaxs.append(xmax / width_factor)
         ymins.append(ymin / height_factor)
@@ -75,8 +80,7 @@ def create_tf_example(filename, encoded_jpeg, annotations, resize=True):
 
 
 def download_tfr(filename, data_dir):
-    """
-    download a single tf record
+    """Download a single tf record.
 
     args:
         - filename [str]: path to the tf record file
@@ -101,8 +105,7 @@ def download_tfr(filename, data_dir):
 
 
 def process_tfr(path, data_dir):
-    """
-    process a Waymo tf record into a tf api tf record
+    """Process a Waymo tf record into a tf api tf record.
 
     args:
         - path [str]: path to the Waymo tf record file
@@ -143,7 +146,8 @@ def download_and_process(filename, data_dir):
 
 if __name__ == "__main__":
     logger = get_module_logger(__name__)
-    parser = argparse.ArgumentParser(description='Download and process tf files')
+    parser = argparse.ArgumentParser(
+        description='Download and process tf files')
     parser.add_argument('--data_dir', required=True,
                         help='data directory')
     parser.add_argument('--size', required=False, default=100, type=int,
@@ -153,11 +157,12 @@ if __name__ == "__main__":
     size = args.size
 
     # open the filenames file
-    with open('filenames.txt', 'r') as f:
+    with open('filenames_rest.txt', 'r') as f:
         filenames = f.read().splitlines()
     logger.info(f'Download {len(filenames[:size])} files. Be patient, this will take a long time.')
 
     # init ray
     ray.init(num_cpus=cpu_count())
-    workers = [download_and_process.remote(fn, data_dir) for fn in filenames[:size]]
+    workers = [download_and_process.remote(fn, data_dir)
+               for fn in filenames[:size]]
     _ = ray.get(workers)
