@@ -157,7 +157,7 @@ if __name__ == "__main__":
     size = args.size
 
     # open the filenames file
-    with open('filenames_rest.txt', 'r') as f:
+    with open('filenames.txt', 'r') as f:
         filenames = f.read().splitlines()
     logger.info(f'Download {len(filenames[:size])} files. Be patient, this will take a long time.')
 
