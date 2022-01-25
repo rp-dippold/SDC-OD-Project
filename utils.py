@@ -9,8 +9,8 @@ from waymo_open_dataset import dataset_pb2 as open_dataset
 
 
 def get_dataset(tfrecord_path, label_map='label_map.pbtxt'):
-    """
-    Opens a tf record file and create tf dataset
+    """Open a tf record file and create tf dataset.
+
     args:
       - tfrecord_path [str]: path to a tf record file
       - label_map [str]: path the label_map file
@@ -20,13 +20,13 @@ def get_dataset(tfrecord_path, label_map='label_map.pbtxt'):
     input_config = input_reader_pb2.InputReader()
     input_config.label_map_path = label_map
     input_config.tf_record_input_reader.input_path[:] = [tfrecord_path]
-    
+
     dataset = build_dataset(input_config)
     return dataset
 
 
 def get_module_logger(mod_name):
-    """ simple logger """
+    """Simple logger."""
     logger = logging.getLogger(mod_name)
     handler = logging.StreamHandler()
     formatter = logging.Formatter('%(asctime)s %(levelname)-8s %(message)s')
@@ -37,8 +37,8 @@ def get_module_logger(mod_name):
 
 
 def get_train_input(config_path):
-    """
-    Get the tf dataset that inputs training batches
+    """Get the tf dataset that inputs training batches.
+
     args:
     - config_path [str]: path to the edited config file
     returns:
@@ -53,19 +53,21 @@ def get_train_input(config_path):
     dataset = train_input(train_config, train_input_config, configs['model'])
     return dataset
 
+
 def parse_frame(frame, camera_name='FRONT'):
-    """ 
-    take a frame, output the bboxes and the image
+    """Take a frame, output the bboxes and the image.
 
     dataset = tf.data.TFRecordDataset(FILENAME, compression_type='')
       for data in dataset:
       frame = open_dataset.Frame()
       frame.ParseFromString(bytearray(data.numpy()))
-    
+
     args:
-      - frame [waymo_open_dataset.dataset_pb2.Frame]: a waymo frame, contains images and annotations
-      - camera_name [str]: one frame contains images and annotations for multiple cameras
-    
+      - frame [waymo_open_dataset.dataset_pb2.Frame]: a waymo frame,
+        contains images and annotations
+      - camera_name [str]: one frame contains images and annotations
+        for multiple cameras
+
     returns:
       - encoded_jpeg [bytes]: jpeg encoded image
       - annotations [protobuf object]: bboxes and classes
@@ -76,7 +78,7 @@ def parse_frame(frame, camera_name='FRONT'):
         if open_dataset.CameraName.Name.Name(im.name) != camera_name:
             continue
         encoded_jpeg = im.image
-    
+
     # get bboxes
     labels = frame.camera_labels
     for lab in labels:
