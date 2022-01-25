@@ -15,8 +15,8 @@ from utils import get_module_logger
 
 
 def main(labelmap_path, model_path, tf_record_path, config_path, output_path):
-    """
-    Use a model and a tf record file and create a mp4 video
+    """Use a model and a tf record file and create a mp4 video.
+
     args:
     - labelmap_path [str]: path to labelmap file
     - model_path [str]: path to exported model
@@ -64,7 +64,7 @@ def main(labelmap_path, model_path, tf_record_path, config_path, output_path):
         # tensor -> numpy arr, remove one dimensions
         num_detections = int(detections.pop('num_detections'))
         detections = {key: value[0, ...].numpy()
-                    for key, value in detections.items()}
+                      for key, value in detections.items()}
         detections['num_detections'] = num_detections
 
         # detection_classes should be ints.
@@ -103,7 +103,7 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description='Create video')
     parser.add_argument('--labelmap_path', required=True, type=str,
-                help='path to the label map')
+                        help='path to the label map')
     parser.add_argument('--model_path', required=True, type=str,
                         help='path to the saved model folder')
     parser.add_argument('--tf_record_path', required=True, type=str,
