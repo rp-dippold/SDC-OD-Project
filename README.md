@@ -26,6 +26,7 @@ The final project scaffold looks as follows:
 ```
 SDC_OD
 ├── README.md                         # This file.
+├── README.html                       # HTML version of the README file.
 ├── create_splits.py                  # Script to create train/test splits.
 ├── download_process.py               # Script to download/process waymo data.
 ├── edit_config.py                    # Script to edit pipline.config files.
@@ -113,10 +114,14 @@ python inference_video.py --labelmap_path label_map.pbtxt --model_path ./experim
 
 ## Dataset
 ### Dataset analysis
-The data analysis started with loading a random sample of ten images to get an impression what kind of images are contained in the dataset. Some example images including the bounding boxes of relevant objects are displayed below.
+The data analysis started with loading a random sample of ten images to get an impression what kind of images are contained in the dataset. Some example images including the bounding boxes of relevant objects are displayed below. More can be found in `Exploratory Data Analysis.ipynb`.
 
-![Examples 1](./images/example_img_1.png)
-![Examples 2](./images/example_img_2.png)
+<p float="left">
+  <img src="./images/example_img_1.png" width="800" />
+</p> 
+<p float="left"> 
+  <img src="./images/example_img_2.png" width="800" />
+</p>
 
 As you can see, objects are of different sizes and frequencies. The size of an object depends not only on its physical dimensions but also on how close or distant it is from the viewer.
 
@@ -153,7 +158,7 @@ Although the data is not equally balanced with respect to the three classes (veh
 
 ## Training
 ### Reference experiment
-The reference model was build without data augementations and an Adam optimizer with a constant learning rate (1e-7 which works well in many other settings.)
+The reference model was build without data augementations and an Adam optimizer with a constant learning rate of 1e-7 which works well in many other settings.
 
 #### Training and validation loss
 The peformance of the reference model was not satisfying. Although the model learned something, the total loss (the sum of the classification, localization and regularization losses) did not reach values below 1.0. 
@@ -197,7 +202,9 @@ Precision and recall were also disappointing, especially for small objects. This
 ### Improve on the reference
 To improve the models performance several changes were applied to the configuration:
 1. The constant learning rate was changed to an exponantial decay learning rate, starting with a higher learning rate to accelerate training.
-2. Further, data augmentations were used to increase image variability in order to improve the model's performance and to make it more robust. Only data augmentations that preserve the images structure were applied as a self driving cars will usually not encounter vehicles upside down or strongly rotated. Thus, random adjustments to the brightness, contrast and hue of the images were added. Additionally, black patches are randomly applied to the images.
+2. Further, data augmentations were used to increase image variability in order to improve the model's performance and to make it more robust. Only data augmentations that preserve the images structure were applied as a self driving car will usually not encounter vehicles upside down or strongly rotated. Thus, random adjustments to the brightness, contrast and hue of the images were added. Additionally, black patches are randomly applied to the images.
+
+Details about supported data augmentations and optimizers can be found in the corresponding proto files of the object detection API: [optimizer proto](https://github.com/tensorflow/models/blob/master/research/object_detection/protos/optimizer.proto), [preprocessor proto](https://github.com/tensorflow/models/blob/master/research/object_detection/protos/preprocessor.proto). 
 
 <p float="left">
   <img src="./images/augm_img_1.png" width="270" />
@@ -207,6 +214,9 @@ To improve the models performance several changes were applied to the configurat
 </p>
 
 #### Training and validation loss
+Training and validation loss improved visibly after making the changes described above. All losses were decreasing right from the beginning and the final total loss stopped at about 0.8. Furthermore, the training loss was less volatile. 
+
+Similar to the reference model, the localization loss is worse than the classification loss but much better than before.
 
 <p float="left">
   <img src="./images/classification_loss_opt.svg" width="270" />
@@ -224,6 +234,9 @@ To improve the models performance several changes were applied to the configurat
 </p>
 
 #### Model performance
+The lower loss values are also reflected in a better model performance measured by precision and recall,
+especially for large objects. Both values are now at about 60% compared to at about 30% in the reference model.
+
 ##### Precision
 <p float="left">
   <img src="./images/Precision_mAP_opt.svg" width="270" />
@@ -241,7 +254,6 @@ To improve the models performance several changes were applied to the configurat
   
   <em> (1) Recall AR@100 - (2) Recall AR@100 (large) - (3) Recall AR@100 (small) </em> 
 </p>
-
 
 The images below show the impact of the new strategy on real images. On each image the model prediction is displayed on the left and the ground truth image on the right. As you can see, the improved model detects more objects, especially pedestrians, and with a higher probability.
 
