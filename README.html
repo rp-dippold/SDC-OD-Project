@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>README.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="object-detection-in-an-urban-environment">Object Detection in an Urban Environment</h1>
+<h2 id="summary">Summary</h2>
+<p>The aim of this project is to create a convolutional neural network to detect and classify objects in an urban environment. These objects are vehicles, pedestrians and cyclists. In this project the TensorFlow Object Detection API is applied to create predictions and the Waymo open dataset as data basis to build a model and get predictions on images. Finally, the model is use to create short videos for model predictions.</p>
+<p>An extensive data analysis is done to select meaningful data augmentations that foster the training process of the model. Additionally, hyperparameter tuning and experimenting with different optimizers is conducted to improve the model's performance.</p>
+<h2 id="setting-up-the-environment">Setting up the environment</h2>
+<p>First of all, setting up and running the whole pipline beginning with downloading the data, preprocessing the data right up to building a model is only possible on Linux based systems as the python package <code>waymo_open_dataset</code> is currently not supported on MacOS or Windows based systems.</p>
+<ol>
+<li>Create a new Python 3.8 virtual environment and use the package manager <a href="https://pip.pypy.io/en/stable">pip</a> to install all required packages contained in the <code>requirements.txt</code> file.</li>
+<li>This project is based on the data from <a href="https://waymo.com/open/">Waymo Open dataset</a>. The files can be downloaded directly from the website as tar files or from the <a href="https://console.cloud.google.com/storage/browser/waymo_open_dataset_v_1_2_0_individual_files/">Google Cloud Bucket</a> as individual tfrecords and should be stored in a subfolder named <code>data</code> as depicted below. This project is based on 100 files and the downloading and processing is done by the python script <code>download_process.py</code>. Details are described below. Assuming the root directory is named SDC_OD the data are organized as follows:</li>
+</ol>
+<pre class="hljs"><code><div>SDC_OD/data/waymo
+    - processed: contains the downloaded and processed data
+    - training_and_validation: contains files to train and validate models
+    - train: contains the training data (empty at the beginning)
+    - val: contains the validation data (empty at the beginning)
+    - test: contains files to test models and create inference videos 
+</div></code></pre>
+<p>After downloading and processing the data it is suggested to move three files to the <code>test</code> folder. The remaining 97 files are intended for training and validation. Copy these files to the <code>training_and_validation</code> folder.
+3. Install the <a href="https://github.com/tensorflow/models/tree/master/research/object_detection">TF Open Detection API</a>. Installation instructions can be found on <a href="https://tensorflow-object-detection-api-tutorial.readthedocs.io/en/latest/install.html">Tensorflow 2 Object Detection API Tutorial</a>.
+4. This project is based on a pretrained model. Download the <a href="http://download.tensorflow.org/models/object_detection/tf2/20200711/ssd_resnet50_v1_fpn_640x640_coco17_tpu-8.tar.gz">pretrained model</a>, then move it to <code>SDC_OD/experiments/pretrained_model/</code> and unzip it. The Tf Object Detection API relies on <strong>config files</strong>. The configuration that is used for this project is <code>pipeline.config</code>, which is the config for a SSD Resnet 50 640x640 model. For this project, a changed config file was created, which is named <code>pipeline_new.config</code> and stored in <code>SDC_OD/experiments/reference</code>.</p>
+<p>The final project scaffold looks as follows:</p>
+<pre class="hljs"><code><div>SDC_OD
+├── README.md                         # This file.
+├── README.html                       # HTML version of the README file.
+├── create_splits.py                  # Script to create train/test splits.
+├── download_process.py               # Script to download/process waymo data.
+├── edit_config.py                    # Script to edit pipline.config files.
+├── Exploratory Data Analysis.ipynb   # Data analysis results.
+├── Explore augmentations.ipynb       # Data augmentation experiments.
+├── filenames.txt                     # Files to be downloaded from waymo.
+├── inference_video.py                # Script to create mp4 videos.
+├── label_map.pbtxt                   # Mapping from label ids to label names.
+├── LICENSE.md                        # License information.
+├── pipeline.config                   # Original pipline.config file (template).
+├── pipeline_new.config               # Edited pipeline.config file.
+├── requirements.txt                  # List of Python packages to be installed.
+├── utils.py                          # File with utility functions.
+├── animations                        # Example animations.
+│   └── ...
+├── data                              # Folder to store the data (see above).
+│   └── ...
+├── images                            # Images used in this readme file.
+│   └── ...
+└── experiments                       # Folder to store experiments.
+    ├── reference
+    │   └── pipeline_new.config       # Config file created to train the model.
+    ├── pretrained_model
+    │   └── ...                       # Single Shot Detector (ssd_resnet50_v1) used in this project.
+    ├── exporter_main_v2.py           # Script to export the trained models.
+    ├── model_main_tf2.py             # Script to train and validate models.
+    └── label_map.pbtxt               # Mapping from label ids to label names.
+</div></code></pre>
+<h2 id="functions-and-files">Functions and Files</h2>
+<p>The following functions and files are provided to attain the project's goal:</p>
+<ul>
+<li><strong>download_process.py</strong>: This file contains python functions to download and process waymo data. The <code>create_tf_example</code> function takes the components of a Waymo Tf record and saves them in the Tf Object Detection API format. The files to be downloaded are collected in the <code>filenames.txt</code> file. All files will be downsampled by the function <code>process_tfr</code>. One of every 10 frames will be selected from 10 fps videos. If enough memory is available, the part which downsamples the images can be removed.</li>
+</ul>
+<p>You can run the script using the following command:</p>
+<pre class="hljs"><code><div>python download_process.py --data_dir {processed_file_location} --size {number of files you want to download; default: 100}
+</div></code></pre>
+<ul>
+<li><strong>create_splits.py</strong>: This script splits (moves) the <code>training_and_validation</code> data into appropriate <code>train</code> and <code>val</code> sets. The following subfolders are expected to be there: <code>SDC_OD/data/waymo/train/</code>, <code>SDC_OD/data/waymo/val/</code>. Details regarding the train/test strategy can found below.
+The script can be run using the following command from the project's root directory:</li>
+</ul>
+<pre class="hljs"><code><div>python create_splits.py --source ./data/waymo/training_and_validation --destination ./data/waymo
+</div></code></pre>
+<p>A new config file will be created, <code>pipeline_new.config</code>, which has to be moved to <code>experiments/reference</code>.</p>
+<ul>
+<li><strong>edit_config.py</strong>: This script edits the config file template to change the location of the training and validation files, as well as the location of the label_map file, the pretrained weights and the batch size. Each time a new train/test split is created, this script has to be run. Further amendments, e.g. changing the optimizer or data augmentation steps, can be done manually. The script can be run by the following command from the project's root directory:</li>
+</ul>
+<pre class="hljs"><code><div>python edit_config.py --train_dir ./data/waymo/train/ --eval_dir ./data/waymo/val/ --batch_size 2 --checkpoint ./experiments/pretrained_model/ssd_resnet50_v1_fpn_640x640_coco17_tpu-8/checkpoint/ckpt-0 --label_map ./experiments/label_map.pbtxt
+</div></code></pre>
+<ul>
+<li>
+<p><strong>Exploratory Data Analysis.ipynb</strong>: This jupyter notebook contains the results of the exploratory data analysis conducted for this project. A detailed description of the functions and their usage can be found there.</p>
+</li>
+<li>
+<p><strong>Explore augmentations.ipynb</strong>: This notebook shows the results of a data augmentation strategy selected to improve the model's performance.</p>
+</li>
+<li>
+<p><strong>model_main_tf2.py</strong>: This script is used to train and validate models. The edited config file is required and expected to be stored in the <code>experiments/reference</code> folder.</p>
+<ul>
+<li>
+<p>Starting a training process from the project's root directory:</p>
+<pre class="hljs"><code><div>python ./experiments/model_main_tf2.py --model_dir=./experiments/{model_experiment_folder}/ --pipeline_config_path=./experiments/reference/pipeline_new.config
+</div></code></pre>
+</li>
+<li>
+<p>Concurrently to the training, start the evaluation process from the project's root directory in a different terminal window:</p>
+<pre class="hljs"><code><div>python ./experiments/model_main_tf2.py --model_dir=./experiments/{model_experiment_folder}/ --pipeline_config_path=./experiments/reference/pipeline_new.config --checkpoint_dir=./experiments/{model_experiment_folder}
+</div></code></pre>
+<p>Calling <code>export CUDA_VISIBLE_DEVICES=-1</code> before starting the evaluation process avoids using the GPU for evaluation. Instead only the CPU will be used for it.</p>
+<p>As the evaluation script has a timeout of 3600 seconds, it may be necessary to terminate it manually using
+<code>CTRL+C</code> after the last model checkpoint was evaluated.</p>
+<p>The training and evalution processes can be monitored in tensorboard by starting tensorboard in a new terminal window. From the project's root directory launch a tensorboard instance by the following command:</p>
+<pre class="hljs"><code><div>python -m tensorboard.main --logdir ./experiments/{model_experiment_folder}
+</div></code></pre>
+<p>Start a browser and monitor the train/eval process.</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>exporter_main_v2.py</strong>: This scipt exports a trained model. For that, a new folder <code>experiments/reference/exported/saved_model</code> should be created. More information about the TensorFlow SavedModel format is available <a href="https://www.tensorflow.org/guide/saved_model">here</a>. Run the following (adjusted) command from the project's root directory:</p>
+</li>
+</ul>
+<pre class="hljs"><code><div>python ./experiments/exporter_main_v2.py --input_type image_tensor --pipeline_config_path ./experiments/reference/pipeline_new.config --trained_checkpoint_dir ./experiments/{model_experiment_folder} --output_directory ./experiments/reference/exported/
+</div></code></pre>
+<ul>
+<li><strong>inference_video.py</strong>: This script creates a video of a model's inferences for any tfrecord file. To to so, run the following (adjusted) command from the project's root directory:</li>
+</ul>
+<pre class="hljs"><code><div>python inference_video.py --labelmap_path label_map.pbtxt --model_path ./experiments/reference/exported/saved_model --tf_record_path ./data/waymo/test/{tfrecord_file} --config_path ./experiments/reference/pipeline_new.config --output_path ./experiments/{model_experiment_folder}/animation.mp4
+</div></code></pre>
+<h2 id="dataset">Dataset</h2>
+<h3 id="dataset-analysis">Dataset analysis</h3>
+<p>The data analysis started with loading a random sample of ten images to get an impression what kind of images are contained in the dataset. Some example images including the bounding boxes of relevant objects are displayed below. More can be found in <code>Exploratory Data Analysis.ipynb</code>.</p>
+<p float="left">
+  <img src="./images/example_img_1.png" width="800" />
+</p> 
+<p float="left"> 
+  <img src="./images/example_img_2.png" width="800" />
+</p>
+<p>As you can see, objects are of different sizes and frequencies. The size of an object depends not only on its physical dimensions but also on how close or distant it is from the viewer.</p>
+<h4 id="colors-and-image-quality">Colors and Image Quality</h4>
+<p>Next, the images where investigated with respect to their color distributions and their quality. The following diagram shows the distribution of the pixel values over all images for the three channels red, green and blue. There are two peak areas. The first peak is between 60 and 100 (low to medium intensity), the second at about 250 (high intensity).</p>
+<p><img src="./images/channel_histogram.png" alt="Channel distribution"></p>
+<p>To get a better idea of what this distribution means, images were further investigated with respect to their quality. It was tried to classify them into three categories: (1) Dark images, (2) blurry images and (3) bright images. These differences are relevant for training a high performing model. Images were converted vom RGB to HLS format in order to utilize the lightness channel to identify dark images. The focus measure (variance of the Laplacian of an image converted into gray) helped to identify blurry images. All other images that were not captured by these criteria were classified as bright. Details regarding the calculations can be found in the Jupyter Notebook <code>Exploratory Data Analysis.ipynb</code>. The criteria worked not perfectly but helped to get an overview of the frequencies of these image types: 8 images were classified as dark, 16 as blurry and 73 as bright. Examples are shown below.</p>
+<p float="left">
+  <img src="./images/dark_img.png" width="270" />
+  <img src="./images/blurry_img.png" width="270" />
+  <img src="./images/bright_img.png" width="270" /> 
+<p><em> Examples for dark, blurry and bright images </em></p>
+</p>
+<h4 id="classes-distributions">Classes distributions</h4>
+<p>Finally, the distribution of the classes (vehicle, pedestrian, cyclist) over the images was investigated, i.e. how often on average each class occurs. For that, the first 10000 images of each tfrecord were selected and the average amount of objects for each class was determined.</p>
+<p><img src="./images/classes_distribution.png" alt="Classes distribution"></p>
+<p>As can be seen in the diagrams above, vehicles are the dominant class over all image sets. Some images contain lots of vehicles whereas a small amount of image sets displays only a low number of vehicles. As the amounts are averages over sets of 10000 images, it can be expected that some images contain no vehicle at all.</p>
+<p>There are lots of image sets with no pedestrians and even more with no cyclists. As there is no clustering of image sets with and without pedestrains/cyclists over the whole set of tfrecords, respectively, you should not expect to get unbalanced training and test sets with respect to theses classes by randomly drawing samples, or put differently, both training and test sets will contain image sets with and without pedestrians/cyclists.</p>
+<p>Nevertheless the set of classes is unbalanced - there are more vehicles than pedestrians and more pedestrians than cyclists which might deteriorate the performance of a model in detecting pedestrians and cyclists.</p>
+<h3 id="cross-validation">Cross validation</h3>
+<p>The cross validation strategy is mainly based on the fact that differences in the quality of the images (dark, blurry, bright) have a strong impact on model performance - e.g. identifying vehicles in the dark is a different challenge compared to recognizing vehicles in daylight. Therefore, images are randomly chosen from each group (dark, blurry, bright) according to the train/test ratio to build the training and test sets. The train size is set to 80% to make sure that enough data of each group is contained in the validation set - especially the dark-image group contains less then ten tfrecord files.</p>
+<p>Although the data is not equally balanced with respect to the three classes (vehicles, pedestrians, cyclists), downsampling the dataset is not taken into consideration as the differences are not too big.</p>
+<h2 id="training">Training</h2>
+<h3 id="reference-experiment">Reference experiment</h3>
+<p>The reference model was build without data augementations and an Adam optimizer with a constant learning rate of 1e-7 which works well in many other settings.</p>
+<h4 id="training-and-validation-loss">Training and validation loss</h4>
+<p>The peformance of the reference model was not satisfying. Although the model learned something, the total loss (the sum of the classification, localization and regularization losses) did not reach values below 1.0.</p>
+<p float="left">
+  <img src="./images/classification_loss_ref.svg" width="270" />
+  <img src="./images/localization_loss_ref.svg" width="270" />
+  <img src="./images/regularization_loss_ref.svg" width="270" />
+<p><em> (1) Classification loss - (2) Localization loss - (3) Regularization loss </em></p>
+</p>
+<p float="left">
+  <img src="./images/total_loss_ref.svg" width="270" />
+  <img src="./images/learning_rate_ref.svg" width="270" />
+<p><em> (1) Total loss - (2) Learning rate </em></p>
+</p>
+<h4 id="model-performance">Model performance</h4>
+<p>Precision and recall were also disappointing, especially for small objects. This is confirmed in the example image shown below where the performances of the reference model and the improved model are compared.</p>
+<h5 id="precision">Precision</h5>
+<p float="left">
+  <img src="./images/Precision_mAP_ref.svg" width="270" />
+  <img src="./images/Precision_mAP_ref_large.svg" width="270" />
+  <img src="./images/Precision_mAP_ref_small.svg" width="270" />
+<p><em> (1) Precision mAP - (2) Precision mAP (large) - (3) Precision mAP (small) </em></p>
+</p>
+<h5 id="recall">Recall</h5>
+<p float="left">
+  <img src="./images/Recall_AR@100_ref.svg" width="270" />
+  <img src="./images/Recall_AR@100_ref_large.svg" width="270" />
+  <img src="./images/Recall_AR@100_ref_small.svg" width="270" />
+<p><em> (1) Recall AR@100 - (2) Recall AR@100 (large) - (3) Recall AR@100 (small) </em></p>
+</p>
+<h3 id="improve-on-the-reference">Improve on the reference</h3>
+<p>To improve the models performance several changes were applied to the configuration:</p>
+<ol>
+<li>The constant learning rate was changed to an exponantial decay learning rate, starting with a higher learning rate to accelerate training.</li>
+<li>Further, data augmentations were used to increase image variability in order to improve the model's performance and to make it more robust. Only data augmentations that preserve the images structure were applied as a self driving car will usually not encounter vehicles upside down or strongly rotated. Thus, random adjustments to the brightness, contrast and hue of the images were added. Additionally, black patches are randomly applied to the images.</li>
+</ol>
+<p>Details about supported data augmentations and optimizers can be found in the corresponding proto files of the object detection API: <a href="https://github.com/tensorflow/models/blob/master/research/object_detection/protos/optimizer.proto">optimizer proto</a>, <a href="https://github.com/tensorflow/models/blob/master/research/object_detection/protos/preprocessor.proto">preprocessor proto</a>.</p>
+<p float="left">
+  <img src="./images/augm_img_1.png" width="270" />
+  <img src="./images/augm_img_2.png" width="270" />
+<p><em> Example images after data augmentations </em></p>
+</p>
+<h4 id="training-and-validation-loss">Training and validation loss</h4>
+<p>Training and validation loss improved visibly after making the changes described above. All losses were decreasing right from the beginning and the final total loss stopped at about 0.8. Furthermore, the training loss was less volatile.</p>
+<p>Similar to the reference model, the localization loss is worse than the classification loss but much better than before.</p>
+<p float="left">
+  <img src="./images/classification_loss_opt.svg" width="270" />
+  <img src="./images/localization_loss_opt.svg" width="270" />
+  <img src="./images/regularization_loss_opt.svg" width="270" />
+<p><em> (1) Classification loss - (2) Localization loss - (3) Regularization loss </em></p>
+</p>
+<p float="left">
+  <img src="./images/total_loss_opt.svg" width="270" />
+  <img src="./images/learning_rate_opt.svg" width="270" />
+<p><em> (1) Total loss - (2) Learning rate </em></p>
+</p>
+<h4 id="model-performance">Model performance</h4>
+<p>The lower loss values are also reflected in a better model performance measured by precision and recall,
+especially for large objects. Both values are now at about 60% compared to at about 30% in the reference model.</p>
+<h5 id="precision">Precision</h5>
+<p float="left">
+  <img src="./images/Precision_mAP_opt.svg" width="270" />
+  <img src="./images/Precision_mAP_opt_large.svg" width="270" />
+  <img src="./images/Precision_mAP_opt_small.svg" width="270" />
+<p><em> (1) Precision mAP - (2) Precision mAP (large) - (3) Precision mAP (small) </em></p>
+</p>
+<h5 id="recall">Recall</h5>
+<p float="left">
+  <img src="./images/Recall_AR@100_opt.svg" width="270" />
+  <img src="./images/Recall_AR@100_opt_large.svg" width="270" />
+  <img src="./images/Recall_AR@100_opt_small.svg" width="270" />
+<p><em> (1) Recall AR@100 - (2) Recall AR@100 (large) - (3) Recall AR@100 (small) </em></p>
+</p>
+<p>The images below show the impact of the new strategy on real images. On each image the model prediction is displayed on the left and the ground truth image on the right. As you can see, the improved model detects more objects, especially pedestrians, and with a higher probability.</p>
+<p float="left">
+  <img src="./images/eval_img_ref.png" width="350" />
+  <img src="./images/eval_img_opt.png" width="350" />
+<p><em> Image evaluation after 24000 training steps: (1) Reference model - (2) Improved model </em></p>
+</p>
+
+</body>
+</html>
