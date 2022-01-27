@@ -9,6 +9,7 @@ An extensive data analysis is done to select meaningful data augmentations that 
 First of all, setting up and running the whole pipline beginning with downloading the data, preprocessing the data right up to building a model is only possible on Linux based systems as the python package `waymo_open_dataset` is currently not supported on MacOS or Windows based systems. 
 
 1. Create a new Python 3.8 virtual environment and use the package manager [pip](https://pip.pypy.io/en/stable) to install all required packages contained in the `requirements.txt` file.
+
 2. This project is based on the data from [Waymo Open dataset](https://waymo.com/open/). The files can be downloaded directly from the website as tar files or from the [Google Cloud Bucket](https://console.cloud.google.com/storage/browser/waymo_open_dataset_v_1_2_0_individual_files/) as individual tfrecords and should be stored in a subfolder named `data` as depicted below. This project is based on 100 files and the downloading and processing is done by the python script `download_process.py`. Details are described below. Assuming the root directory is named SDC_OD the data are organized as follows:
 ```
 SDC_OD/data/waymo
@@ -19,7 +20,9 @@ SDC_OD/data/waymo
     - test: contains files to test models and create inference videos 
 ```
 After downloading and processing the data it is suggested to move three files to the `test` folder. The remaining 97 files are intended for training and validation. Copy these files to the `training_and_validation` folder.
+
 3. Install the [TF Open Detection API](https://github.com/tensorflow/models/tree/master/research/object_detection). Installation instructions can be found on [Tensorflow 2 Object Detection API Tutorial](https://tensorflow-object-detection-api-tutorial.readthedocs.io/en/latest/install.html).
+
 4. This project is based on a pretrained model. Download the [pretrained model](http://download.tensorflow.org/models/object_detection/tf2/20200711/ssd_resnet50_v1_fpn_640x640_coco17_tpu-8.tar.gz), then move it to `SDC_OD/experiments/pretrained_model/` and unzip it. The Tf Object Detection API relies on **config files**. The configuration that is used for this project is `pipeline.config`, which is the config for a SSD Resnet 50 640x640 model. For this project, a changed config file was created, which is named `pipeline_new.config` and stored in `SDC_OD/experiments/reference`.
 
 The final project scaffold looks as follows:
